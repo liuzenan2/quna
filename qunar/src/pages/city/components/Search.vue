@@ -6,7 +6,7 @@
   </div>
    <div class="search-content" ref="seach" v-show="keyword">
        <ul>
-           <li v-for="(item,index) in list" :key="index" class="search-item border-bottom">
+           <li v-for="(item,index) in list" :key="index" class="search-item border-bottom" @click="handleCityClick(item.name)">
                {{item.name}}
            </li>
            <li class="search-item border-bottom" v-if="!list.length" >
@@ -19,6 +19,7 @@
 
 <script>
 import Bscroll from 'better-scroll'
+import {mapActions} from 'vuex'
 export default {
   name: 'CitySearch',
   data() {
@@ -31,6 +32,13 @@ export default {
   props:{
       cities:Object
   },
+   methods: {
+    ...mapActions(['changeCity']),
+    handleCityClick(city){
+    this.changeCity(city)
+    this.$router.push('/')
+    }
+   },
   watch: {
     keyword(){
         if(this.timer){
